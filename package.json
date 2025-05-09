@@ -1,4 +1,5 @@
 {
+  "name": "custom-ts-logger",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.4",
     "@upstash/redis": "^1.34.9",
