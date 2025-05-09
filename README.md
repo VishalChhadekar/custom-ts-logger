@@ -15,7 +15,7 @@ A reusable, framework-agnostic logging utility written in TypeScript. This packa
 Install the package using npm:
 
 ```bash
-npm install your-logger-package
+npm install custom-ts-logger
 ```
 
 ## Usage
