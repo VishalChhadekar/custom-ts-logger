@@ -1,1 +1,5 @@
 node_modules/
+clearQueue.ts
+clearQueue.js
+testLogger.ts
+testLogger.js

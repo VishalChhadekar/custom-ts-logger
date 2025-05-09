@@ -18,16 +18,16 @@ function flushLogsToStorage(redisClient, supabaseClient, queueKey, bucketName) {
                 return;
             const groupedLogs = {};
             logs.forEach((log) => {
-                var _a;
                 try {
-                    const logEntry = JSON.parse(log);
-                    const date = ((_a = logEntry.timestamp) === null || _a === void 0 ? void 0 : _a.split('T')[0]) || new Date().toISOString().split('T')[0];
-                    if (!groupedLogs[date])
+                    const parsedLog = typeof log === 'string' ? JSON.parse(log) : log; // Check if already parsed
+                    const date = parsedLog.timestamp.split('T')[0];
+                    if (!groupedLogs[date]) {
                         groupedLogs[date] = [];
-                    groupedLogs[date].push(logEntry);
+                    }
+                    groupedLogs[date].push(parsedLog);
                 }
                 catch (error) {
-                    console.error('Failed to parse log entry:', error);
+                    console.error('Failed to parse log entry:', error, log); // Log the invalid entry
                 }
             });
             yield Promise.all(Object.entries(groupedLogs).map((_a) => __awaiter(this, [_a], void 0, function* ([date, logs]) {

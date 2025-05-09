@@ -15,12 +15,14 @@ export async function flushLogsToStorage(
         const groupedLogs: Record<string, LogEvent[]> = {};
         logs.forEach((log) => {
             try {
-                const logEntry: LogEvent = JSON.parse(log);
-                const date = logEntry.timestamp?.split('T')[0] || new Date().toISOString().split('T')[0];
-                if (!groupedLogs[date]) groupedLogs[date] = [];
-                groupedLogs[date].push(logEntry);
+                const parsedLog = typeof log === 'string' ? JSON.parse(log) : log; // Check if already parsed
+                const date = parsedLog.timestamp.split('T')[0];
+                if (!groupedLogs[date]) {
+                    groupedLogs[date] = [];
+                }
+                groupedLogs[date].push(parsedLog);
             } catch (error) {
-                console.error('Failed to parse log entry:', error);
+                console.error('Failed to parse log entry:', error, log); // Log the invalid entry
             }
         });
 
